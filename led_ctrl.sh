@@ -72,7 +72,7 @@ else
             echo "$DEVICE is not found!"
         fi
     else
-        echo "Please install storcli-00X.XXXX.0000.0000-1.noarch.rpm
+        echo "Please install storcli-00X.XXXX.0000.0000-1.noarch.rpm"
     fi
 fi
 
