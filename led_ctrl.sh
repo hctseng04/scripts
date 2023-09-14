@@ -11,8 +11,8 @@
 #
 ################################################################################
 
-STORAGE_CLI="/opt/smartstorageadmin/ssacli/bin/ssacli" # ssacli-5.10-44.0.x86_64.rpm
-STORAGE_CLI="/opt/MegaRAID/storcli/storcli64"          # ssacli-6.15-11.0.x86_64.rpm
+STORAGE_CLI="/opt/hpe/storcli/storcli64"
+STORAGE_CLI="/opt/MegaRAID/storcli/storcli64"
 
 while getopts d:s: option
 do
@@ -72,7 +72,7 @@ else
             echo "$DEVICE is not found!"
         fi
     else
-        echo "Please install ssacli (ssacli-X.XX-XX.X.x86_64.rpm)"
+        echo "Please install storcli-00X.XXXX.0000.0000-1.noarch.rpm
     fi
 fi
 
