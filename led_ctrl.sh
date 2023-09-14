@@ -11,8 +11,8 @@
 #
 ################################################################################
 
-STORAGE_CLI="/opt/smartstorageadmin/ssacli/bin/ssacli"
-STORAGE_CLI="/opt/MegaRAID/storcli/storcli64"
+STORAGE_CLI="/opt/smartstorageadmin/ssacli/bin/ssacli" # ssacli-5.10-44.0.x86_64.rpm
+STORAGE_CLI="/opt/MegaRAID/storcli/storcli64"          # ssacli-6.15-11.0.x86_64.rpm
 
 while getopts d:s: option
 do
