@@ -11,6 +11,9 @@
 #
 ################################################################################
 
+STORAGE_CLI="/opt/smartstorageadmin/ssacli/bin/ssacli"
+STORAGE_CLI="/opt/MegaRAID/storcli/storcli64"
+
 while getopts d:s: option
 do
     case "${option}"
@@ -27,18 +30,18 @@ else
         echo "./led_ctrl.sh -d /dev/sdaX -s on|off"
         exit 1
     fi
-    if [[ -f "/opt/MegaRAID/storcli/storcli64" ]]; then
+    if [[ -f $STORAGE_CLI ]]; then
         if [[ -b $DEVICE ]]; then
             WWN=`udevadm info --name $DEVICE | grep SCSI_IDENT_TARGET_NAA_REG= | cut -d "=" -f 2`
             if [[ $WWN == "" ]]; then
                 WWN=`udevadm info --name $DEVICE | grep SCSI_IDENT_LUN_NAA_REG= | cut -d "=" -f 2`
             fi
             if [[ $WWN != "" ]]; then
-                DRIVE_LOC=`/opt/MegaRAID/storcli/storcli64 /call/eall/sall show all|grep -C6 -i $WWN | grep "Device attributes" | awk '{print $2}'`
+                DRIVE_LOC=`$STORAGE_CLI /call/eall/sall show all|grep -C6 -i $WWN | grep "Device attributes" | awk '{print $2}'`
             else
                 #WWN=`udevadm info --name $DEVICE | grep SCSI_IDENT_LUN_NAA_REGEXT= | cut -d "=" -f 2`
-                CTRL_NUM=`/opt/MegaRAID/storcli/storcli64 /call/vall show all |grep -B60 $DEVICE | grep Controller | grep -o -P '\d+'`
-                DRIVE_LOC_TMP=`/opt/MegaRAID/storcli/storcli64 /call/vall show all |grep -B40 $DEVICE | grep \ Onln | awk '{print $1}'`
+                CTRL_NUM=`$STORAGE_CLI /call/vall show all |grep -B60 $DEVICE | grep Controller | grep -o -P '\d+'`
+                DRIVE_LOC_TMP=`$STORAGE_CLI /call/vall show all |grep -B40 $DEVICE | grep \ Onln | awk '{print $1}'`
                 DRIVE_LOC_TMP=${DRIVE_LOC_TMP//:/\/s}
                 DRIVE_LOC_ARR=($DRIVE_LOC_TMP)
                 DRIVE_LOC=""
@@ -57,9 +60,9 @@ else
             for i in "${DRIVE_LOC_ARR[@]}"
             do
                 if [[ $SWITCH == "on" ]]; then
-                    /opt/MegaRAID/storcli/storcli64 $i start locate
+                    $STORAGE_CLI $i start locate
                 elif [[ $SWITCH == "off" ]]; then
-                    /opt/MegaRAID/storcli/storcli64 $i stop locate
+                    $STORAGE_CLI $i stop locate
                 else
                     echo "unknown switch option: $SWITCH"
                     exit 1
@@ -69,7 +72,7 @@ else
             echo "$DEVICE is not found!"
         fi
     else
-        echo "Please install storcli (ssacli-X.XX-XX.X.x86_64.rpm)"
+        echo "Please install ssacli (ssacli-X.XX-XX.X.x86_64.rpm)"
     fi
 fi
 
