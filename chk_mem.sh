@@ -16,6 +16,7 @@ done
            close(cmdrss);
            cmdvmem=sprintf("numfmt --from-unit=K --to=iec --format %s %d", "%8.1f", vmem);
            cmdvmem | getline converted_vmem;
+           close(cmdvmem);
            print converted_rss" "converted_vmem
        }')
  done | sort -k3 -h
